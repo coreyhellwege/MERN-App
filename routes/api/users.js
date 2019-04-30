@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const config = require("config");
 
 // We're using Express Validator to validate User post requests
 const { check, validationResult } = require("express-validator/check");
@@ -66,8 +68,23 @@ router.post(
       // Save User to the database
       await user.save();
 
-      // Return jsonwebtoken so that when a user registers they are then logged in
-      res.send("User Registered");
+      // Create the jwt payload to include User ID
+      const payload = {
+        user: {
+          id: user.id
+        }
+      };
+
+      // Sign the token
+      jwt.sign(
+        payload, // pass in the payload
+        config.get("jwtSecret"), // pass in the secret
+        { expiresIn: 360000 }, // set an expiration timeframe
+        (err, token) => {
+          if (err) throw err;
+          res.json({ token }); // if success, send token to the client
+        }
+      );
     } catch (err) {
       console.error(err.message);
       res.send(500).send("Server error");
@@ -76,5 +93,6 @@ router.post(
 );
 
 // Notes: Add 'await' before anything that returns a promise (instead of using .then .catch)
+// Decode a JWT: https://jwt.io
 
 module.exports = router;
