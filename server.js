@@ -1,27 +1,23 @@
 const express = require("express");
-const mongoose = require("mongoose");
-const users = require("./routes/api/users");
-const profile = require("./routes/api/profile");
-const posts = require("./routes/api/posts");
+const connectDB = require("./config/db");
 
 const app = express();
 
-// DB Config
-const db = require("./config/keys").mongoURI;
+// Connect Database
+connectDB();
 
-// Connect to MongoDB
-mongoose
-  .connect(db)
-  .then(() => console.log("MongoDB Connected"))
-  .catch(err => console.log(err));
+// Initialize Middleware
+app.use(express.json({ extended: false })); // allows us to get the data in req.body
 
-app.get("/", (req, res) => res.send("Hello world"));
+// Send a simple string to the browser
+app.get("/", (req, res) => res.send("API Running"));
 
-// use Routes
-app.use("/api/users", users);
-app.use("/api/profile", profile);
-app.use("/api/posts", posts);
+// Define Routes
+app.use("/api/auth", require("./routes/api/auth"));
+app.use("/api/posts", require("./routes/api/posts"));
+app.use("/api/profile", require("./routes/api/profile"));
+app.use("/api/users", require("./routes/api/users"));
 
-const port = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000;
 
-app.listen(port, () => console.log(`Server running on port ${port}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

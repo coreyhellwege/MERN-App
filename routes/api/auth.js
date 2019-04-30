@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 
-// Route:         GET api/posts
+// Route:         POST api/auth
 // Description:   Test route
 // Access:        Public
 router.get("/", (req, res) => {
   console.log(req.body);
-  res.send("Posts route");
+  res.send("Auth route");
 });
 
 module.exports = router;
