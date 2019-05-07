@@ -10,8 +10,10 @@ const db = config.get("mongoURI");
 const connectDB = async () => {
   try {
     await mongoose.connect(db, {
+      // Fix deprecation warnings:
       useNewUrlParser: true,
-      useCreateIndex: true
+      useCreateIndex: true,
+      useFindAndModify: false
     });
     console.log("MongoDB Connected..");
   } catch (err) {
