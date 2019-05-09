@@ -1,7 +1,10 @@
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux"; // must also be exported
+import { setAlert } from "../../actions/alert";
+import PropTypes from "prop-types";
 
-const Register = () => {
+const Register = ({ setAlert }) => {
   // formData is the state (which is an object with all the form data)
   // setFormData is the function used to update the state
   // useState() is a hook
@@ -26,7 +29,8 @@ const Register = () => {
 
     // make sure passwords match
     if (password !== password2) {
-      console.log("Passwords do not match");
+      // pass in error message to action
+      setAlert("Passwords do not match", "danger"); // danger = the alert type
     } else {
       console.log(formData); // we have access to the state directly
     }
@@ -94,4 +98,12 @@ const Register = () => {
   );
 };
 
-export default Register;
+Register.propTypes = {
+  setAlert: PropTypes.func.isRequired // ES7 keyboard shortcut - ptfr
+};
+
+// To use an action you have imported, you must pass it into connect
+export default connect(
+  null, // Connect takes in: the state you want to map
+  { setAlert } // and an object with any actions you want to use
+)(Register);
