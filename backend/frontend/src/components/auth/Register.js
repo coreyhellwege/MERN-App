@@ -2,9 +2,10 @@ import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux"; // must also be exported
 import { setAlert } from "../../actions/alert";
+import { register } from "../../actions/auth";
 import PropTypes from "prop-types";
 
-const Register = ({ setAlert }) => {
+const Register = ({ setAlert, register }) => {
   // formData is the state (which is an object with all the form data)
   // setFormData is the function used to update the state
   // useState() is a hook
@@ -32,7 +33,7 @@ const Register = ({ setAlert }) => {
       // pass in error message to action
       setAlert("Passwords do not match", "danger"); // danger = the alert type
     } else {
-      console.log(formData); // we have access to the state directly
+      register({ name, email, password }); // call register
     }
   };
 
@@ -50,7 +51,6 @@ const Register = ({ setAlert }) => {
             name="name"
             value={name}
             onChange={e => onChange(e)}
-            required
           />
         </div>
         <div className="form-group">
@@ -60,7 +60,6 @@ const Register = ({ setAlert }) => {
             name="email"
             value={email}
             onChange={e => onChange(e)}
-            required
           />
           <small className="form-text">
             This site uses Gravatar so if you want a profile image, use a
@@ -74,8 +73,6 @@ const Register = ({ setAlert }) => {
             name="password"
             value={password}
             onChange={e => onChange(e)}
-            minLength="6"
-            required
           />
         </div>
         <div className="form-group">
@@ -85,8 +82,6 @@ const Register = ({ setAlert }) => {
             name="password2"
             value={password2}
             onChange={e => onChange(e)}
-            minLength="6"
-            required
           />
         </div>
         <input type="submit" className="btn btn-primary" value="Register" />
@@ -98,12 +93,14 @@ const Register = ({ setAlert }) => {
   );
 };
 
+// Add props as prop types
 Register.propTypes = {
-  setAlert: PropTypes.func.isRequired // ES7 keyboard shortcut - ptfr
+  setAlert: PropTypes.func.isRequired, // ES7 keyboard shortcut - ptfr
+  register: PropTypes.func.isRequired
 };
 
 // To use an action you have imported, you must pass it into connect
 export default connect(
   null, // Connect takes in: the state you want to map
-  { setAlert } // and an object with any actions you want to use
+  { setAlert, register } // and an object with any actions you want to use
 )(Register);
