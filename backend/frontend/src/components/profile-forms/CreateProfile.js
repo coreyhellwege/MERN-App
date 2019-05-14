@@ -1,10 +1,12 @@
 import React, { Fragment, useState } from "react";
+import { Link, withRouter } from "react-router-dom"; // in order to pass through the history object you need to import withRouter
 import PropTypes from "prop-types";
-import { Connect } from "react-redux";
+import { connect } from "react-redux";
+import { createProfile } from "../../actions/profile";
 
 // Each form input is a piece of state
 
-const CreateProfile = props => {
+const CreateProfile = ({ createProfile, history }) => {
   const [formData, setFormData] = useState({
     // default fields
     company: "",
@@ -44,6 +46,12 @@ const CreateProfile = props => {
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
+  // call createProfile on submit
+  const onSubmit = e => {
+    e.preventDefault();
+    createProfile(formData, history);
+  };
+
   return (
     <Fragment>
       <h1 className="large text-primary">Create Your Profile</h1>
@@ -52,7 +60,7 @@ const CreateProfile = props => {
         profile stand out
       </p>
       <small>* = required field</small>
-      <form className="form">
+      <form className="form" onSubmit={e => onSubmit(e)}>
         <div className="form-group">
           <select name="status" value={status} onChange={e => onChange(e)}>
             <option value="0">* Select Professional Status</option>
@@ -219,6 +227,11 @@ const CreateProfile = props => {
   );
 };
 
-CreateProfile.propTypes = {};
+CreateProfile.propTypes = {
+  createProfile: PropTypes.func.isRequired
+};
 
-export default CreateProfile;
+export default connect(
+  null,
+  { createProfile } // action
+)(withRouter(CreateProfile));
