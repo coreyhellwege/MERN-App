@@ -1,4 +1,4 @@
-import { GET_PROFILE, PROFILE_ERROR } from "../actions/types";
+import { GET_PROFILE, PROFILE_ERROR, CLEAR_PROFILE } from "../actions/types";
 
 const initialState = {
   profile: null, // stores logged in user's profile data as well as profiles of other users when visited
@@ -23,6 +23,13 @@ export default function(state = initialState, action) {
       return {
         ...state,
         error: payload, // any error messages will be in the payload
+        loading: false
+      };
+    case CLEAR_PROFILE:
+      return {
+        ...state,
+        profile: null,
+        repos: [],
         loading: false
       };
     default:
