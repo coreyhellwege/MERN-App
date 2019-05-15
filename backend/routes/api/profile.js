@@ -307,7 +307,7 @@ router.put(
       // response
       res.json(profile);
     } catch (err) {
-      res.status(500).send("Server Errrrrror");
+      res.status(500).send("Server Error");
     }
   }
 );
