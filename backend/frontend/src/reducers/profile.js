@@ -1,4 +1,9 @@
-import { GET_PROFILE, PROFILE_ERROR, CLEAR_PROFILE } from "../actions/types";
+import {
+  GET_PROFILE,
+  UPDATE_PROFILE,
+  PROFILE_ERROR,
+  CLEAR_PROFILE
+} from "../actions/types";
 
 const initialState = {
   profile: null, // stores logged in user's profile data as well as profiles of other users when visited
@@ -14,6 +19,7 @@ export default function(state = initialState, action) {
   // Handle the action types
   switch (type) {
     case GET_PROFILE:
+    case UPDATE_PROFILE:
       return {
         ...state, // return current state
         profile: payload, // set the profile to the profile data sent back through the payload
