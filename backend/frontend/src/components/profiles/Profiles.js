@@ -9,7 +9,7 @@ const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
   // run getProfile once as soon as this component loads
   useEffect(() => {
     getProfiles();
-  }, []);
+  }, [getProfiles]); // add getProfiles as a dependency
 
   return (
     <Fragment>

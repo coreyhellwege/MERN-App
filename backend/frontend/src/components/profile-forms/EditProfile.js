@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { Link, withRouter } from "react-router-dom"; // in order to pass through the history object you need to import withRouter
+import { withRouter } from "react-router-dom"; // in order to pass through the history object you need to import withRouter
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createProfile, getCurrentProfile } from "../../actions/profile"; // this action is used to edit profile too
@@ -52,7 +52,7 @@ const EditProfile = ({
       youtube: loading || !profile.social ? "" : profile.social.youtube,
       instagram: loading || !profile.social ? "" : profile.social.instagram
     });
-  }, [loading]); // we want this function to load once when loading prop runs
+  }, [loading, getCurrentProfile]); // we want this function to load once when loading prop runs
 
   // destructure
   const {

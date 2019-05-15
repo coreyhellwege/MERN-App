@@ -17,7 +17,7 @@ const Dashboard = ({
   // call getCurrentProfile as soon as the component loads, using useEffect hook
   useEffect(() => {
     getCurrentProfile();
-  }, []); // run once
+  }, [getCurrentProfile]); // run once
 
   // Show spinner whilst profile is loading
   return loading && profile === null ? (

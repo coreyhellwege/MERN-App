@@ -7,7 +7,7 @@ const initialState = []; // this will contain alerts (which are objects)
 
 export default function(state = initialState, action) {
   // action contains type and payload
-  const { type, payload } = action; // pull out type and payload from action (destructure)
+  const { payload } = action; // pull out type and payload from action (destructure)
 
   switch (action.type) {
     // copy any alerts currently in state and add the new alert (payload)

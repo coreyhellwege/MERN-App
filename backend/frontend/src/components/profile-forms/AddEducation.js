@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Link, withRouter } from "react-router-dom"; // we need withRouter here because we're redirecting in the profile action file
+import { withRouter } from "react-router-dom"; // we need withRouter here because we're redirecting in the profile action file
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addEducation } from "../../actions/profile";
@@ -136,4 +136,4 @@ AddEducation.propTypes = {
 export default connect(
   null,
   { addEducation }
-)(AddEducation);
+)(withRouter(AddEducation)); // wrap the component in withRouter to enable the redirect
