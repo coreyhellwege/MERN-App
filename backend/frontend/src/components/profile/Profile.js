@@ -1,0 +1,57 @@
+import React, { Fragment, useEffect } from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import Spinner from "../layout/Spinner";
+import { getProfileById } from "../../actions/profile";
+
+const Profile = ({
+  getProfileById,
+  profile: { profile, loading },
+  auth,
+  match
+}) => {
+  useEffect(() => {
+    getProfileById(match.params.id); // get ID from the URL using match.params
+  }, [getProfileById]);
+
+  // Ternary logic: if there's no profile or the page is loading, show the spinner. Else show profile info.
+  return (
+    <Fragment>
+      {profile === null || loading ? (
+        <Spinner />
+      ) : (
+        <Fragment>
+          <Link to="/profiles" className="btn btn-light">
+            Back To Profiles
+          </Link>
+          {auth.isAuthenticated &&
+            auth.loading === false &&
+            auth.user._id === profile.user._id && (
+              <Link to="/edit-profile" className="btn btn-dark">
+                Edit Profile
+              </Link>
+            )}
+        </Fragment>
+      )}
+    </Fragment>
+  );
+};
+
+Profile.propTypes = {
+  getProfileById: PropTypes.func.isRequired,
+  profile: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  profile: state.profile,
+  auth: state.auth // we want this to see if the user is logged in so that if the profile matches we will display an edit profile button
+});
+
+export default connect(
+  mapStateToProps,
+  { getProfileById }
+)(Profile);
+
+// parent component
