@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import Spinner from "../layout/Spinner";
+import ProfileTop from "./ProfileTop";
+import ProfileAbout from "./ProfileAbout";
 import { getProfileById } from "../../actions/profile";
 
 const Profile = ({
@@ -13,7 +15,7 @@ const Profile = ({
 }) => {
   useEffect(() => {
     getProfileById(match.params.id); // get ID from the URL using match.params
-  }, [getProfileById]);
+  }, [getProfileById, match.params.id]);
 
   // Ternary logic: if there's no profile or the page is loading, show the spinner. Else show profile info.
   return (
@@ -32,6 +34,10 @@ const Profile = ({
                 Edit Profile
               </Link>
             )}
+          <div class="profile-grid my-1">
+            <ProfileTop profile={profile} />
+            <ProfileAbout profile={profile} />
+          </div>
         </Fragment>
       )}
     </Fragment>
