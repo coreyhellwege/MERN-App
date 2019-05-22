@@ -20,7 +20,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         posts: payload, // will come from the action file
-        laoding: false
+        loading: false
       };
     case POST_ERROR:
       return {
