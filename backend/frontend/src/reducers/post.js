@@ -3,6 +3,7 @@ import {
   GET_POSTS,
   POST_ERROR,
   UPDATE_LIKES,
+  ADD_POST,
   DELETE_POST
 } from "../actions/types";
 
@@ -25,6 +26,13 @@ export default function(state = initialState, action) {
       return {
         ...state,
         posts: payload, // will come from the action file
+        loading: false
+      };
+    case ADD_POST:
+      return {
+        ...state,
+        // add to posts a copy of all posts in the state, plus the payload (which is the new post that just got created)
+        posts: [payload, ...state.posts],
         loading: false
       };
     case DELETE_POST:
