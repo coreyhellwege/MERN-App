@@ -1,7 +1,7 @@
 {
-  "name": "backend",
+  "name": "mern-socialmediaapp",
   "version": "1.0.0",
-  "description": "Social media app - backend",
+  "description": "Social media app",
   "main": "server.js",
   "scripts": {
     "start": "node server",
