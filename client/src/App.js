@@ -5,7 +5,7 @@ import Landing from "./components/layout/Landing";
 import Routes from "./components/routing/Routes";
 
 // Redux
-import { Provider } from "react-redux"; // This connects React with Redux'
+import { Provider } from "react-redux"; // This connects React with Redux
 import store from "./store";
 import { loadUser } from "./actions/auth";
 import setAuthToken from "./utils/setAuthToken";
